@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.test.mapper.PacsCacheMapper" >
+  <resultMap id="BaseResultMap" type="com.example.test.entity.PacsCache" >
+    <constructor >
+      <idArg column="pac_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sheet_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="patient_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="access_pat_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="client_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pac_id, sheet_id, patient_id, access_pat_id, client_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pacs_cache
+    where pac_id = #{pacId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pacs_cache
+    where pac_id = #{pacId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.test.entity.PacsCache" >
+    insert into pacs_cache (pac_id, sheet_id, patient_id, 
+      access_pat_id, client_id)
+    values (#{pacId,jdbcType=INTEGER}, #{sheetId,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, 
+      #{accessPatId,jdbcType=VARCHAR}, #{clientId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.test.entity.PacsCache" >
+    insert into pacs_cache
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pacId != null" >
+        pac_id,
+      </if>
+      <if test="sheetId != null" >
+        sheet_id,
+      </if>
+      <if test="patientId != null" >
+        patient_id,
+      </if>
+      <if test="accessPatId != null" >
+        access_pat_id,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pacId != null" >
+        #{pacId,jdbcType=INTEGER},
+      </if>
+      <if test="sheetId != null" >
+        #{sheetId,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null" >
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="accessPatId != null" >
+        #{accessPatId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.test.entity.PacsCache" >
+    update pacs_cache
+    <set >
+      <if test="sheetId != null" >
+        sheet_id = #{sheetId,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null" >
+        patient_id = #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="accessPatId != null" >
+        access_pat_id = #{accessPatId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pac_id = #{pacId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.test.entity.PacsCache" >
+    update pacs_cache
+    set sheet_id = #{sheetId,jdbcType=VARCHAR},
+      patient_id = #{patientId,jdbcType=VARCHAR},
+      access_pat_id = #{accessPatId,jdbcType=VARCHAR},
+      client_id = #{clientId,jdbcType=VARCHAR}
+    where pac_id = #{pacId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getPacsCache" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from pacs_cache where access_pat_id = #{accessPatId}
+
+  </select>
+
+</mapper>
